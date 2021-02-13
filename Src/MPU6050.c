@@ -1,8 +1,17 @@
+#include "MPU6050.h"
 #include "stm32g0xx_hal.h"
 #include "stm32g0xx_hal_conf.h"
-#include "MPU6050.h"
 #include "util.h"
 #include "MPU6050Calibration.h"
+
+#define MPU6050_ADDRESS 0x68
+#define PWR_MGMT_1 0x6B
+#define USER_CTRL 0x6A
+#define WHO_AM_I 0x75
+#define ACCEL_CONFIG 0x1C
+#define GYRO_CONFIG 0x1B
+#define ACCEL_XOUT_H 0x3B
+#define GYRO_XOUT_H 0x43
 
 #define GYRO_ADJUSTMENT 0.0005321126f
 
@@ -93,7 +102,7 @@ void calibrateAccelerometer(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c)
 }
 
 // 0x68
-uint8_t getWHOAMI(I2C_HandleTypeDef *i2c)
+uint8_t getMPUWhoAmI(I2C_HandleTypeDef *i2c)
 {
 	uint8_t res;
 	readBytes(i2c, MPU6050_ADDRESS, WHO_AM_I, &res, 1);
