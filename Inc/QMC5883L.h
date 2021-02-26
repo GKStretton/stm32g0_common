@@ -7,8 +7,17 @@
 float Mx, My, Mz;
 
 void QMC5883L_Init(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c);
+struct MagCalibration {
+	float MxMin;
+	float MxMax;
+	float MyMin;
+	float MyMax;
+	float MzMin;
+	float MzMax;
+};
+
 
 void updateMagnetometer(I2C_HandleTypeDef *i2c);
-void adjustMagnetometer();
+void adjustMagnetometer(struct MagCalibration *cal);
 
 uint8_t getWhoIs();

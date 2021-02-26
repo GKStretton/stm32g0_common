@@ -31,7 +31,7 @@ void updateMagnetometer(I2C_HandleTypeDef *i2c)
 	Mz = (data[5] << 8) | data[4];
 }
 
-void adjustMagnetometer()
+void adjustMagnetometer(struct MagCalibration *cal)
 {
 
 }
