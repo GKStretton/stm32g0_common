@@ -37,7 +37,9 @@ void updateMagnetometer(I2C_HandleTypeDef *i2c)
 
 void adjustMagnetometer(struct MagCalibration *cal)
 {
-
+	Mx = 2 * (Mx - cal->MxMin) / (cal->MxMax - cal->MxMin) - 1;
+	My = 2 * (My - cal->MyMin) / (cal->MyMax - cal->MyMin) - 1;
+	Mz = 2 * (Mz - cal->MzMin) / (cal->MzMax - cal->MzMin) - 1;
 }
 
 void calibrateMagnetometer(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c)
