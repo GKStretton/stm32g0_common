@@ -12,6 +12,7 @@
 #define GYRO_CONFIG 0x1B
 #define ACCEL_XOUT_H 0x3B
 #define GYRO_XOUT_H 0x43
+#define INT_ENABLE 0x38
 
 #define GYRO_ADJUSTMENT 0.0005321126f
 
@@ -24,6 +25,7 @@ void MPU6050_Init(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c)
 	writeOneByte(i2c, MPU6050_ADDRESS, PWR_MGMT_1, 0x00);
 	writeOneByte(i2c, MPU6050_ADDRESS, ACCEL_CONFIG, 0x00);
 	writeOneByte(i2c, MPU6050_ADDRESS, GYRO_CONFIG, 0x10);
+	writeOneByte(i2c, MPU6050_ADDRESS, INT_ENABLE, 0x00); // DATA_RDY_EN disable
 	HAL_Delay(100);
 	print(uart, "MPU-6050 Initialisation complete. (No self-test)\n");
 }
@@ -40,7 +42,7 @@ void updateAccelerometer(I2C_HandleTypeDef *i2c)
 
 	Ax = -x * 2.0f / 32767.5f;
 	Ay = -y * 2.0f / 32767.5f;
-	Az = -z * 2.0f / 32767.5f;
+	Az = z * 2.0f / 32767.5f;
 }
 
 void updateGyro(I2C_HandleTypeDef *i2c)
