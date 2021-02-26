@@ -26,9 +26,13 @@ void updateMagnetometer(I2C_HandleTypeDef *i2c)
 	uint8_t data[6];
 	readBytes(i2c, QMC_ADDRESS, XOUT_REGISTER, data, 6);
 
-	Mx = (data[1] << 8) | data[0];
-	My = (data[3] << 8) | data[2];
-	Mz = (data[5] << 8) | data[4];
+	float Lx = (data[1] << 8) | data[0];
+	float Ly = (data[3] << 8) | data[2];
+	float Lz = (data[5] << 8) | data[4];
+
+	Mx = -Ly;
+	My = Lx;
+	Mz = Lz;
 }
 
 void adjustMagnetometer(struct MagCalibration *cal)
