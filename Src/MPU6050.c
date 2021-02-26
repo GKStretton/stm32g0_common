@@ -56,8 +56,8 @@ void updateGyro(I2C_HandleTypeDef *i2c)
 	z = (data[4] << 8) | data[5];
 
 	// (G / 32.8 (sensitivity))* PI / 180.0f
-	Gx = x * GYRO_ADJUSTMENT;
-	Gy = y * GYRO_ADJUSTMENT;
+	Gx = -x * GYRO_ADJUSTMENT;
+	Gy = -y * GYRO_ADJUSTMENT;
 	Gz = z * GYRO_ADJUSTMENT;
 }
 
