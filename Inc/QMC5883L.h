@@ -24,4 +24,6 @@ void QMC5883L_Init(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c, uint8_t rat
 void updateMagnetometer(I2C_HandleTypeDef *i2c);
 void adjustMagnetometer(struct MagCalibration *cal);
 
+void calibrateMagnetometer(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c);
+
 uint8_t getWhoIs();

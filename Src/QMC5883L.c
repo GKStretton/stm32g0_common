@@ -40,6 +40,16 @@ void adjustMagnetometer(struct MagCalibration *cal)
 
 }
 
+void calibrateMagnetometer(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c)
+{
+	while (1)
+	{
+		updateMagnetometer(i2c);
+		printFloats(uart, "", 3, Mx, My, Mz);
+		HAL_Delay(50);
+	}
+}
+
 uint8_t getWhoIs(I2C_HandleTypeDef *i2c)
 {
 	uint8_t id;
