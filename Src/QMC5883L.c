@@ -7,10 +7,10 @@
 #define CR1_REGISTER 0x09
 #define CR2_REGISTER 0x0A
 
-void QMC5883L_Init(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c)
+void QMC5883L_Init(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c, uint8_t rateSetting)
 {
 	// 0000RR01 10:00 50:01 100:10 200:11
-	writeOneByte(i2c, QMC_ADDRESS, CR1_REGISTER, 0b00000001);
+	writeOneByte(i2c, QMC_ADDRESS, CR1_REGISTER, 0b00000001 | (rateSetting << 2));
 	if (getWhoIs() != 0xFF)
 	{
 		print(uart, "QMC5883L Incorrect ID:");
