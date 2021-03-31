@@ -29,11 +29,12 @@ void updateCompFilter(float timeElapsed, float Gx, float Gy, float Gz, float Ax,
 		Ry += 2 * PI;
 	}
 
+	/*
 	float x = Mx * cosf(-Aroll) + My * sinf(-Aroll);
 	float z = Mx * sinf(-Aroll) * sinf(-Apitch) - My * cosf(-Aroll) * sinf(-Apitch) + Mz * cosf(-Apitch);
 	float heading = -arctan2(-x, -z);
 
 	if (heading < PI * 0.8 && heading > -PI * 0.8 && Ry < PI * 0.8 && Ry > -PI * 0.8) {
 		Ry = Ry * alphaMag + heading * (1 - alphaMag);
-	}
+	}*/
 }
