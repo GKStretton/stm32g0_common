@@ -40,8 +40,8 @@ void updateAccelerometer(I2C_HandleTypeDef *i2c)
 	y = (data[2] << 8) | data[3];
 	z = (data[4] << 8) | data[5];
 
-	Ax = -x * 2.0f / 32767.5f;
-	Ay = -y * 2.0f / 32767.5f;
+	Ax = x * 2.0f / 32767.5f;
+	Ay = y * 2.0f / 32767.5f;
 	Az = z * 2.0f / 32767.5f;
 }
 
