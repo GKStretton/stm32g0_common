@@ -86,3 +86,11 @@ void writeOneByte(I2C_HandleTypeDef *i2c, uint8_t address, uint8_t subaddress, u
 {
 	HAL_I2C_Mem_Write(i2c, address << 1, subaddress, I2C_MEMADD_SIZE_8BIT, &data, 1, HAL_MAX_DELAY);
 }
+
+void ledflash(I2C_HandleTypeDef *i2c)
+{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+	HAL_Delay(500);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+	HAL_Delay(500);
+}
