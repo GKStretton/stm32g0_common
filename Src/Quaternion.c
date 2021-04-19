@@ -51,13 +51,6 @@ bool Quaternion_equal(Quaternion* q1, Quaternion* q2)
     return equalW && equalV0 && equalV1 && equalV2;
 }
 
-void Quaternion_fprint(FILE* file, Quaternion* q)
-{
-    fprintf(file, "(%.3f, %.3f, %.3f, %.3f)",
-        q->w, q->v[0], q->v[1], q->v[2]);
-}
-
-
 void Quaternion_fromAxisAngle(double axis[3], double angle, Quaternion* output)
 {
     assert(output != NULL);

@@ -34,6 +34,11 @@ void print(UART_HandleTypeDef *huart, char* str)
 	HAL_UART_Transmit(huart, (uint8_t*) str, strlen(str), 1000);
 }
 
+void printQuaternion(UART_HandleTypeDef *huart, double w, double v[])
+{
+	printFloats(huart, "", 4, (float) w, (float) v[0], (float) v[1], (float) v[2]);
+}
+
 void printTimer(UART_HandleTypeDef *huart, uint16_t i)
 {
 	char output[50];

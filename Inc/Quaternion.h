@@ -56,11 +56,7 @@ void Quaternion_copy(Quaternion* q, Quaternion* output);
  */
 bool Quaternion_equal(Quaternion* q1, Quaternion* q2);
 
-/**
- * Print the quaternion to a given file (e.g., stderr).
- */
-void Quaternion_fprint(FILE* file, Quaternion* q);
-
+/*
 /**
  * Set the quaternion to the equivalent of axis-angle rotation.
  * @param axis

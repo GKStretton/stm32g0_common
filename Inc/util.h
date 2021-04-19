@@ -11,6 +11,7 @@
 void printFloats(UART_HandleTypeDef *huart, char* str, int n, ...);
 void print(UART_HandleTypeDef *huart, char* str);
 void printTimer(UART_HandleTypeDef *huart, uint16_t i);
+void printQuaternion(UART_HandleTypeDef *huart, double w, double v[]);
 void printTimerInv(UART_HandleTypeDef *huart, uint16_t i);
 float arctan2(float a, float b);
 float boundOne(float a);
