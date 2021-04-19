@@ -56,8 +56,8 @@ void updateGyro(I2C_HandleTypeDef *i2c)
 	z = (data[4] << 8) | data[5];
 
 	// (G / 32.8 (sensitivity))* PI / 180.0f
-	Gx = -x * GYRO_ADJUSTMENT;
-	Gy = -y * GYRO_ADJUSTMENT;
+	Gx = x * GYRO_ADJUSTMENT;
+	Gy = y * GYRO_ADJUSTMENT;
 	Gz = z * GYRO_ADJUSTMENT;
 }
 
@@ -99,7 +99,7 @@ void calibrateAccelerometer(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c)
 	while (1)
 	{
 		updateAccelerometer(i2c);
-		printFloats(uart, "Acc values: ", 3, Ax * 100.0f, Ay * 100.0f, Az * 100.0f);
+		printFloats(uart, "", 3, Ax, Ay, Az);
 	}
 }
 
