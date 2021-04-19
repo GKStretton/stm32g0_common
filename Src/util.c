@@ -17,13 +17,13 @@ void printFloats(UART_HandleTypeDef *huart, char* str, int n, ...)
 	// Most
 	for (int i = 0; i < n - 1; i++)
 	{
-		current = (int) (100 * ((float) va_arg(list, double)));
+		current = (int) (1000 * ((float) va_arg(list, double)));
 		snprintf(output, 10, "%d,", current);
 		HAL_UART_Transmit(huart, (uint8_t*) output, strlen(output), 1000);
 	}
 
 	// Final
-	current = (int) (100 * ((float) va_arg(list, double)));
+	current = (int) (1000 * ((float) va_arg(list, double)));
 	snprintf(output, 10, "%d\n", current);
 	HAL_UART_Transmit(huart, (uint8_t*) output, strlen(output), 1000);
 	va_end(list);
