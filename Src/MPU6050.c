@@ -23,7 +23,7 @@ void MPU6050_Init(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c)
 	//writeOneByte(i2c, MPU6050_ADDRESS, PWR_MGMT_1, 0x80);
 	HAL_Delay(100);
 	writeOneByte(i2c, MPU6050_ADDRESS, PWR_MGMT_1, 0x00);
-	writeOneByte(i2c, MPU6050_ADDRESS, ACCEL_CONFIG, 0x00);
+	writeOneByte(i2c, MPU6050_ADDRESS, ACCEL_CONFIG, 0x10);
 	writeOneByte(i2c, MPU6050_ADDRESS, GYRO_CONFIG, 0x10);
 	writeOneByte(i2c, MPU6050_ADDRESS, INT_ENABLE, 0x00); // DATA_RDY_EN disable
 	HAL_Delay(100);
@@ -40,9 +40,9 @@ void updateAccelerometer(I2C_HandleTypeDef *i2c)
 	y = (data[2] << 8) | data[3];
 	z = (data[4] << 8) | data[5];
 
-	Ax = x * 19.62f / 32767.5f;
-	Ay = y * 19.62f / 32767.5f;
-	Az = z * 19.62f / 32767.5f;
+	Ax = x * 8 * 9.81f / 32767.5f;
+	Ay = y * 8 * 9.81f / 32767.5f;
+	Az = z * 8 * 9.81f / 32767.5f;
 }
 
 void updateGyro(I2C_HandleTypeDef *i2c)
@@ -63,9 +63,9 @@ void updateGyro(I2C_HandleTypeDef *i2c)
 
 void adjustAccelerometer(struct AccCalibration *accCal)
 {
-	Ax = 2 * (Ax - accCal->AxMin) / (accCal->AxMax - accCal->AxMin) - 1;
-	Ay = 2 * (Ay - accCal->AyMin) / (accCal->AyMax - accCal->AyMin) - 1;
-	Az = 2 * (Az - accCal->AzMin) / (accCal->AzMax - accCal->AzMin) - 1;
+	Ax = 9.81 * (2 * (Ax - accCal->AxMin) / (accCal->AxMax - accCal->AxMin) - 1);
+	Ay = 9.81 * (2 * (Ay - accCal->AyMin) / (accCal->AyMax - accCal->AyMin) - 1);
+	Az = 9.81 * (2 * (Az - accCal->AzMin) / (accCal->AzMax - accCal->AzMin) - 1);
 }
 
 void adjustGyro(struct GyroCalibration *gyroCal)
