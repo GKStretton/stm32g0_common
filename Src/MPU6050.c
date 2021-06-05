@@ -90,7 +90,7 @@ void calibrateGyro(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c)
 			GzAvg += Gz / 1000.0f;
 		}
 
-		printFloats(uart, "Gyro offsets: ", 3, GxAvg * 100.0f, GyAvg * 100.0f, GzAvg * 100.0f);
+		printFloats(uart, "", 3, GxAvg * 1000.0f, GyAvg * 1000.0f, GzAvg * 1000.0f);
 	}
 }
 
