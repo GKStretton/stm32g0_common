@@ -1,6 +1,4 @@
 #include "MPU6050.h"
-#include "stm32g0xx_hal.h"
-#include "stm32g0xx_hal_conf.h"
 #include "util.h"
 #include "MPU6050Calibration.h"
 
@@ -16,9 +14,7 @@
 
 #define GYRO_ADJUSTMENT 0.0005321126f
 
-
-void MPU6050_Init(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c)
-{
+void MPU6050_Init(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c) {
 	// MPU6050 setup
 	//writeOneByte(i2c, MPU6050_ADDRESS, PWR_MGMT_1, 0x80);
 	HAL_Delay(100);
@@ -30,8 +26,7 @@ void MPU6050_Init(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c)
 	print(uart, "MPU-6050 Initialisation complete. (No self-test)\n");
 }
 
-void updateAccelerometer(I2C_HandleTypeDef *i2c)
-{
+void updateAccelerometer(I2C_HandleTypeDef *i2c) {
 	uint8_t data[6];
 	readBytes(i2c, MPU6050_ADDRESS, ACCEL_XOUT_H, data, 6);
 
@@ -45,8 +40,7 @@ void updateAccelerometer(I2C_HandleTypeDef *i2c)
 	Az = z * 8 * 9.81f / 32767.5f;
 }
 
-void updateGyro(I2C_HandleTypeDef *i2c)
-{
+void updateGyro(I2C_HandleTypeDef *i2c) {
 	uint8_t data[6];
 	readBytes(i2c, MPU6050_ADDRESS, GYRO_XOUT_H, data, 6);
 
@@ -61,24 +55,23 @@ void updateGyro(I2C_HandleTypeDef *i2c)
 	Gz = z * GYRO_ADJUSTMENT;
 }
 
-void adjustAccelerometer(struct AccCalibration *accCal)
-{
-	Ax = 9.81 * (2 * (Ax - accCal->AxMin) / (accCal->AxMax - accCal->AxMin) - 1);
-	Ay = 9.81 * (2 * (Ay - accCal->AyMin) / (accCal->AyMax - accCal->AyMin) - 1);
-	Az = 9.81 * (2 * (Az - accCal->AzMin) / (accCal->AzMax - accCal->AzMin) - 1);
+void adjustAccelerometer(struct AccCalibration *accCal) {
+	Ax = 9.81
+			* (2 * (Ax - accCal->AxMin) / (accCal->AxMax - accCal->AxMin) - 1);
+	Ay = 9.81
+			* (2 * (Ay - accCal->AyMin) / (accCal->AyMax - accCal->AyMin) - 1);
+	Az = 9.81
+			* (2 * (Az - accCal->AzMin) / (accCal->AzMax - accCal->AzMin) - 1);
 }
 
-void adjustGyro(struct GyroCalibration *gyroCal)
-{
+void adjustGyro(struct GyroCalibration *gyroCal) {
 	Gx = Gx - gyroCal->GxOff;
 	Gy = Gy - gyroCal->GyOff;
 	Gz = Gz - gyroCal->GzOff;
 }
 
-void calibrateGyro(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c)
-{
-	while (1)
-	{
+void calibrateGyro(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c) {
+	while (1) {
 		float GxAvg = 0;
 		float GyAvg = 0;
 		float GzAvg = 0;
@@ -90,22 +83,20 @@ void calibrateGyro(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c)
 			GzAvg += Gz / 1000.0f;
 		}
 
-		printFloats(uart, "", 3, GxAvg * 1000.0f, GyAvg * 1000.0f, GzAvg * 1000.0f);
+		printFloats(uart, "", 3, GxAvg * 1000.0f, GyAvg * 1000.0f,
+				GzAvg * 1000.0f);
 	}
 }
 
-void calibrateAccelerometer(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c)
-{
-	while (1)
-	{
+void calibrateAccelerometer(UART_HandleTypeDef *uart, I2C_HandleTypeDef *i2c) {
+	while (1) {
 		updateAccelerometer(i2c);
 		printFloats(uart, "", 3, Ax, Ay, Az);
 	}
 }
 
 // 0x68
-uint8_t getMPUWhoAmI(I2C_HandleTypeDef *i2c)
-{
+uint8_t getMPUWhoAmI(I2C_HandleTypeDef *i2c) {
 	uint8_t res;
 	readBytes(i2c, MPU6050_ADDRESS, WHO_AM_I, &res, 1);
 	return res;

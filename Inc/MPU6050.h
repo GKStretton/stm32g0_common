@@ -1,8 +1,19 @@
 #pragma once
 #include <stdint.h>
+
+#include "BOARD_CONFIG.h"
+#ifdef STM32G0
 #include "stm32g0xx_hal.h"
 #include "stm32g0xx_hal_i2c.h"
 #include "stm32g0xx_hal_uart.h"
+#include "stm32g0xx_hal_conf.h"
+#endif
+#ifdef STM32F0
+#include "stm32f0xx_hal.h"
+#include "stm32f0xx_hal_i2c.h"
+#include "stm32f0xx_hal_uart.h"
+#include "stm32f0xx_hal_conf.h"
+#endif
 
 float Ax, Ay, Az;
 float Gx, Gy, Gz;

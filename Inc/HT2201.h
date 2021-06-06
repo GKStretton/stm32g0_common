@@ -1,9 +1,17 @@
 #pragma once
 
+#include "BOARD_CONFIG.h"
+
 #include <stdint.h>
+
+#ifdef STM32G0
 #include "stm32g0xx_hal.h"
 #include "stm32g0xx_hal_i2c.h"
-
+#endif
+#ifdef STM32F0
+#include "stm32f0xx_hal.h"
+#include "stm32f0xx_hal_i2c.h"
+#endif
 
 uint8_t readWord(I2C_HandleTypeDef *i2c, uint8_t addr);
 float readFloat(I2C_HandleTypeDef *i2c, uint8_t addr);
